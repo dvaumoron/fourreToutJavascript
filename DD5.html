@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>DD5</title>
+		<script src="jquery-2.1.4.min.js"></script>
+		<script src="DD5.js"></script>
+	</head>
+	<body>
+		<label>Name : </label><input type="text" id="name" />
+		<label>Class : </label><select id="class"></select>
+		<label>Level : </label><input type="number" id="level" />
+		<label>Proficiency : </label><span id="profMod"></span><br/>
+
+		<table>
+			<tr>
+				<td/>
+				<td>Score</td>
+				<td>Mod</td>
+				<td>Saving throw</td>
+			</tr>
+			<tr>
+				<td>Str : </td>
+				<td><input type="number" id="str" /></td>
+				<td><span id="strMod"></span></td>
+				<td><span id="strST"></span></td>
+			</tr>
+			<tr>
+				<td>Dex : </td>
+				<td><input type="number" id="dex" /></td>
+				<td><span id="dexMod"></span></td>
+				<td><span id="dexST"></span></td>
+			</tr>
+			<tr>
+				<td>Con : </td>
+				<td><input type="number" id="con" /></td>
+				<td><span id="conMod"></span></td>
+				<td><span id="conST"></span></td>
+			</tr>
+			<tr>
+				<td>Int : </td>
+				<td><input type="number" id="int" /></td>
+				<td><span id="intMod"></span></td>
+				<td><span id="intST"></span></td>
+			</tr>
+			<tr>
+				<td>Wis : </td>
+				<td><input type="number" id="wis" /></td>
+				<td><span id="wisMod"></span></td>
+				<td><span id="wisST"></span></td>
+			</tr>
+			<tr>
+				<td>Cha : </td>
+				<td><input type="number" id="cha" /></td>
+				<td><span id="chaMod"></span></td>
+				<td><span id="chaST"></span></td>
+			</tr>
+		</table>
+
+		<label>Hit point max (average) : </label><span id="hitPointMax"></span><br/>
+		<label>Hit dice : </label><span id="numberHitDice"></span>D<span id="hitDice"></span>
+	</body>
+</html>
