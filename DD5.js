@@ -60,6 +60,15 @@ $(document).ready(function() {
 
 	var abilityList = ['str','dex','con','int','wis','cha'];
 
+	var skillByAbility = {
+		str:['athletics'],
+		dex:['acrobatics', 'sleightOfHand', 'stealth'],
+		con:[],
+		int:['arcana', 'history', 'investigation', 'nature', 'religion'],
+		wis:['animalHandling', 'insight', 'medecine', 'perception', 'survival'],
+		cha:['deception', 'intimidation', 'performance', 'persuasion']
+	}
+
 	function calculateMod(value, warn) {
 		var score = parseInt(value);
 		if (warn && (score < 1 || score > 20)) {
@@ -96,6 +105,20 @@ $(document).ready(function() {
 		});
 	}
 
+	function updateSkill() {
+		$.each(abilityList, function(index, value) {
+			$.each(skillByAbility[value], function(index2, value2) {
+				var prof = calculateProf($("#level").val(), false);
+				var mod = calculateMod($('#' + value).val(), false);
+				if ($('#' + value2 + "Trained").prop('checked')) {
+					$('#' + value2 + "Mod").text(toModString(mod + prof))
+				} else {
+					$('#' + value2 + "Mod").text(toModString(mod))
+				}
+			});
+		});
+	}
+
 	function toModString(mod) {
 		var modStr = '';
 		if (mod >= 0) {
@@ -119,8 +142,28 @@ $(document).ready(function() {
 			} else {
 				$('#' + value + 'ST').text(toModString(mod));
 			}
+			$.each(skillByAbility[value], function(index2, value2) {
+				if ($('#' + value2 + "Trained").prop('checked')) {
+					$('#' + value2 + "Mod").text(toModString(mod + prof))
+				} else {
+					$('#' + value2 + "Mod").text(toModString(mod))
+				}
+			});
 		});
 		el.change();
+
+		$.each(skillByAbility[value], function(index2, value2) {
+			var el2 = $('#' + value2 + "Trained");
+			el2.change(function () {
+				var prof = calculateProf($("#level").val(), false);
+				var mod = calculateMod(el.val(), false);
+				if (el2.prop('checked')) {
+					$('#' + value2 + "Mod").text(toModString(mod + prof))
+				} else {
+					$('#' + value2 + "Mod").text(toModString(mod))
+				}
+			});
+		});
 	});
 
 	var levelInput = $("#level");
@@ -132,7 +175,7 @@ $(document).ready(function() {
 	levelInput.change();
 	levelInput.change(updateHPMax);
 	levelInput.change(updateST);
-	
+	levelInput.change(updateSkill);
 
 	var classSelect = $('#class');
 	classSelect.change(function() {
