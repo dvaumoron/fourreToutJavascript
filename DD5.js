@@ -1,55 +1,4 @@
 $(document).ready(function() {
-	var classes = {
-		barbarian: {
-			hitDice: 12,
-			savingThrowProf: ['str','con']
-		},
-		bard: {
-			hitDice: 8,
-			savingThrowProf: ['dex','cha']
-		},
-		cleric: {
-			hitDice: 8,
-			savingThrowProf: ['wis','cha']
-		},
-		druid: {
-			hitDice: 8,
-			savingThrowProf: ['int','wis']
-		},
-		fighter: {
-			hitDice: 10,
-			savingThrowProf: ['str','con']
-		},
-		monk: {
-			hitDice: 8,
-			savingThrowProf: ['str','dex']
-		},
-		paladin: {
-			hitDice: 10,
-			savingThrowProf: ['wis','cha']
-		},
-		ranger: {
-			hitDice: 10,
-			savingThrowProf: ['str','dex']
-		},
-		rogue: {
-			hitDice: 8,
-			savingThrowProf: ['dex','int']
-		},
-		sorcerer: {
-			hitDice: 6,
-			savingThrowProf: ['con','cha']
-		},
-		warlock: {
-			hitDice: 8,
-			savingThrowProf: ['wis','cha']
-		},
-		wizard: {
-			hitDice: 6,
-			savingThrowProf: ['int','wis']
-		}
-	};
-
 	function capitalizeFirstLetter(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
@@ -58,14 +7,10 @@ $(document).ready(function() {
 		return string.replace(/([A-Z])/g, ' $1')
 	}
 
-	$.each(classes, function(classe, value) {
-		$('#class').append('<option value="' + classe + '">' + capitalizeFirstLetter(classe) + '</option>')
-	});
-
 	var abilityList = ['str','dex','con','int','wis','cha'];
 
 	$.each(abilityList, function(index, ability) {
-		$('#abilityTable').append('<tr><td>' + capitalizeFirstLetter(ability) + ' : </td><td><input type="number" id="' + ability + '" /></td><td><span id="' + ability + 'Mod"></span></td><td><span id="' + ability +'ST"></span></td></tr>');
+		$('#abilityTable').append('<tr><td>' + capitalizeFirstLetter(ability) + '<span id="' + ability + 'Bonus"><span/> : </td><td><input type="number" id="' + ability + '" /></td><td><span id="' + ability + 'Mod"></span></td><td><span id="' + ability +'ST"></span></td></tr>');
 	});
 
 	var skillByAbility = {
@@ -91,6 +36,236 @@ $(document).ready(function() {
 		$('#skillTable').append('<tr><td><input type="checkbox" id="' + skill + 'Trained" /></td><td><span id="' + skill + 'Mod"></span></td><td>' + capitalizeFirstLetter(spaceCamel(skill)) + '(' + capitalizeFirstLetter(abilityBySkill[skill]) + ')</td></tr>');
 	});
 
+	var races = {
+		hillDwarf:{
+			ability: [0, 0, 2, 0, 1, 0],
+			speed: 25,
+			hitPoint: 1,
+			skillNumber: 0,
+			skills: []
+		},
+		mountainDwarf: {
+			ability: [2, 0, 2, 0, 0, 0],
+			speed: 25,
+			hitPoint: 0,
+			skillNumber: 0,
+			skills: []
+		},
+		highElf: {
+			ability: [0, 2, 0, 1, 0, 0],
+			speed: 30,
+			hitPoint: 0,
+			skillNumber: 1,
+			skills: ['perception']
+		},
+		woodElf: {
+			ability: [0, 2, 0, 0, 1, 0],
+			speed: 35,
+			hitPoint: 0,
+			skillNumber: 1,
+			skills: ['perception']
+		},
+		drow: {
+			ability: [0, 2, 0, 0, 0, 1],
+			speed: 30,
+			hitPoint: 0,
+			skillNumber: 1,
+			skills: ['perception']
+		},
+		lightfootHalfling: {
+			ability: [0, 2, 0, 0, 0, 1],
+			speed: 25,
+			hitPoint: 0,
+			skillNumber: 0,
+			skills: []
+		},
+		stoutHalfling: {
+			ability: [0, 2, 1, 0, 0, 0],
+			speed: 25,
+			hitPoint: 0,
+			skillNumber: 0,
+			skills: []
+		},
+		human: {
+			ability: [1, 1, 1, 1, 1, 1],
+			speed: 30,
+			hitPoint: 0,
+			skillNumber: 0,
+			skills: []
+		},
+		dragonborn: {
+			ability: [2, 0, 0, 0, 0, 1],
+			speed: 30,
+			hitPoint: 0,
+			skillNumber: 0,
+			skills: []
+		},
+		forestGnome: {
+			ability: [0, 1, 0, 2, 0, 0],
+			speed: 25,
+			hitPoint: 0,
+			skillNumber: 0,
+			skills: []
+		},
+		rockGnome: {
+			ability: [0, 0, 1, 2, 0, 0],
+			speed: 25,
+			hitPoint: 0,
+			skillNumber: 0,
+			skills: []
+		},
+		halfElf: {
+			ability: [0, 0, 0, 0, 0, 2],
+			speed: 30,
+			hitPoint: 0,
+			skillNumber: 2,
+			skills: []
+		},
+		halfOrc: {
+			ability: [2, 0, 1, 0, 0, 0],
+			speed: 30,
+			hitPoint: 0,
+			skillNumber: 1,
+			skills: ['intimidation']
+		},
+		tiefling: {
+			ability: [0, 0, 0, 1, 0, 2],
+			speed: 30,
+			hitPoint: 0,
+			skillNumber: 1,
+			skills: ['intimidation']
+		}
+	};
+
+	$.each(races, function(race, value) {
+		$('#race').append('<option value="' + race + '">' + capitalizeFirstLetter(spaceCamel(race)) + '</option>');
+	});
+
+	var classes = {
+		barbarian: {
+			hitDice: 12,
+			savingThrowProf: ['str','con'],
+			skillNumber: 2,
+			skills: ['animalHandling', 'athletics', 'intimidation', 'nature', 'perception', 'survival']
+		},
+		bard: {
+			hitDice: 8,
+			savingThrowProf: ['dex','cha'],
+			skillNumber: 3,
+			skills: skillList
+		},
+		cleric: {
+			hitDice: 8,
+			savingThrowProf: ['wis','cha'],
+			skillNumber: 2,
+			skills: ['history', 'insight', 'medecine', 'persuasion', 'religion']
+		},
+		druid: {
+			hitDice: 8,
+			savingThrowProf: ['int','wis'],
+			skillNumber: 2,
+			skills: ['arcana', 'animalHandling', 'insight', 'medecine', 'nature', 'perception', 'religion', 'survival']
+		},
+		fighter: {
+			hitDice: 10,
+			savingThrowProf: ['str','con'],
+			skillNumber: 2,
+			skills: ['acrobatics', 'animalHandling', 'athletics', 'history', 'insight', 'intimidation', 'perception', 'survival']
+		},
+		monk: {
+			hitDice: 8,
+			savingThrowProf: ['str','dex'],
+			skillNumber: 2,
+			skills: ['acrobatics', 'athletics', 'history', 'insight', 'religion', 'stealth']
+		},
+		paladin: {
+			hitDice: 10,
+			savingThrowProf: ['wis','cha'],
+			skillNumber: 2,
+			skills: ['athletics', 'insight', 'intimidation', 'medecine', 'persuasion', 'religion']
+		},
+		ranger: {
+			hitDice: 10,
+			savingThrowProf: ['str','dex'],
+			skillNumber: 3,
+			skills: ['animalHandling', 'athletics', 'insight', 'investigation', 'nature', 'perception', 'stealth', 'survival']
+		},
+		rogue: {
+			hitDice: 8,
+			savingThrowProf: ['dex','int'],
+			skillNumber: 4,
+			skills: ['acrobatics', 'athletics', 'deception', 'insight', 'intimidation', 'investigation', 'perception', 'performance', 'persuasion', 'sleightOfHand', 'stealth']
+		},
+		sorcerer: {
+			hitDice: 6,
+			savingThrowProf: ['con','cha'],
+			skillNumber: 2,
+			skills: ['arcana', 'deception', 'insight', 'intimidation', 'persuasion', 'religion']
+		},
+		warlock: {
+			hitDice: 8,
+			savingThrowProf: ['wis','cha'],
+			skillNumber: 2,
+			skills: ['arcana', 'deception', 'history', 'intimidation', 'investigation', 'nature', 'religion']
+		},
+		wizard: {
+			hitDice: 6,
+			savingThrowProf: ['int','wis'],
+			skillNumber: 2,
+			skills: ['arcana', 'history', 'insight', 'investigation', 'medecine', 'religion']
+		}
+	};
+
+	$.each(classes, function(classe, value) {
+		$('#class').append('<option value="' + classe + '">' + capitalizeFirstLetter(classe) + '</option>');
+	});
+
+	var bgs = {
+		acolyte: {
+			skills: ['insight', 'religion']
+		},
+		charlatan: {
+			skills: ['deception', 'sleightOfHand']
+		},
+		criminal: {
+			skills: ['deception', 'stealth']
+		},
+		entertainer: {
+			skills: ['acrobatics', 'performance']
+		},
+		folkHero: {
+			skills: ['animalHandling', 'survival']
+		},
+		guildArtisan: {
+			skills: ['insight', 'persuasion']
+		},
+		hermit: {
+			skills: ['medecine', 'religion']
+		},
+		noble: {
+			skills: ['history', 'persuasion']
+		},
+		outlander: {
+			skills: ['athletics', 'survival']
+		},
+		sage: {
+			skills: ['arcana', 'history']
+		},
+		sailor: {
+			skills: ['athletics', 'perception']
+		},
+		soldier: {
+			skills: ['athletics', 'intimidation']
+		},
+		urchin: {
+			skills: ['sleightOfHand', 'stealth']
+		}
+	};
+
+	$.each(bgs, function(bg, value) {
+		$('#bg').append('<option value="' + bg + '">' + capitalizeFirstLetter(spaceCamel(bg)) + '</option>');
+	});
+
 	function calculateMod(value, warn) {
 		var score = parseInt(value);
 		if (warn && (score < 1 || score > 20)) {
@@ -107,11 +282,24 @@ $(document).ready(function() {
 		return 1 + Math.ceil(level / 4);
 	}
 
+	function displaySkillNumber() {
+		var skillNumber = classes[$('#class').val()].skillNumber + 2 + races[$('#race').val()].skillNumber;
+		skillNumber -= $('[id$="Trained"]:checked').length;
+		var skillNumberStr;
+		if (skillNumber == 0) {
+			skillNumberStr = '';
+		} else {
+			skillNumberStr = '(' + skillNumber + ')';
+		}
+		$('#skillNumber').text(skillNumberStr);
+	}
+
 	function updateHPMax() {
 		var level = parseInt($("#level").val());
 		var classHitDice = classes[$('#class').val()].hitDice;
 		var conMod = calculateMod($('#con').val(), false);
-		$('#hitPointMax').text(classHitDice + level * conMod + (level - 1) * (classHitDice / 2 + 1));
+		var raceHitPoint = races[$('#race').val()].hitPoint;
+		$('#hitPointMax').text(classHitDice + level * (conMod + raceHitPoint) + (level - 1) * (classHitDice / 2 + 1));
 	}
 
 	function updateST() {
@@ -139,6 +327,28 @@ $(document).ready(function() {
 				}
 			});
 		});
+	}
+
+	function updateSkillList() {
+		$.each(skillList, function(index, skill) {
+			var el = $('#' + skill + 'Trained');
+			el.prop('checked', false);
+			el.prop('disabled', true);
+		});
+		$.each(classes[$('#class').val()].skills, function(index, skill) {
+			$('#' + skill + 'Trained').prop('disabled', false);
+		});
+		$.each(bgs[$('#bg').val()].skills, function(index, skill) {
+			var el = $('#' + skill + 'Trained');
+			el.prop('checked', true);
+			el.prop('disabled', true);
+		});
+		$.each(races[$('#race').val()].skills, function(index, skill) {
+			var el = $('#' + skill + 'Trained');
+			el.prop('checked', true);
+			el.prop('disabled', true);
+		});
+		displaySkillNumber();
 	}
 
 	function toModString(mod) {
@@ -172,7 +382,6 @@ $(document).ready(function() {
 				}
 			});
 		});
-		el.change();
 
 		$.each(skillByAbility[ability], function(index2, skill) {
 			var el2 = $('#' + skill + "Trained");
@@ -184,6 +393,7 @@ $(document).ready(function() {
 				} else {
 					$('#' + skill + "Mod").text(toModString(mod))
 				}
+				displaySkillNumber();
 			});
 		});
 	});
@@ -193,24 +403,50 @@ $(document).ready(function() {
 		var level = levelInput.val();
 		$('#profMod').text(toModString(calculateProf(level, true)));
 		$('#numberHitDice').text(level);
+		updateHPMax();
+		updateST();
+		updateSkill();
 	});
-	levelInput.change();
-	levelInput.change(updateHPMax);
-	levelInput.change(updateST);
-	levelInput.change(updateSkill);
 
 	var classSelect = $('#class');
 	classSelect.change(function() {
 		$('#hitDice').text(classes[classSelect.val()].hitDice);
+		updateHPMax();
+		updateST();
+		updateSkillList();
+		updateSkill();
 	});
-	classSelect.change();
-	classSelect.change(updateHPMax);
-	classSelect.change(updateST);
+
+	var bgSelect = $('#bg');
+	bgSelect.change(updateSkillList);
+	bgSelect.change(updateSkill);
+
+	var raceSelect = $('#race');
+	raceSelect.change(function() {
+		var race = races[raceSelect.val()];
+		$('#speed').text(race.speed);
+		var abilityBonusArray = race.ability;
+		$.each(abilityList, function(index, ability) {
+			var abilityBonus = abilityBonusArray[index];
+			var abilityBonusStr;
+			if (abilityBonus == 0) {
+				abilityBonusStr = '';
+			} else {
+				abilityBonusStr = '(+' + abilityBonus + ')';
+			}
+			$('#' + ability + 'Bonus').text(abilityBonusStr);
+		});
+		updateHPMax();
+		updateSkillList();
+		updateSkill();
+	});
 
 	$('#save').click(function() {
 		var save = {};
 		save['class'] = classSelect.val();
 		save['level'] = levelInput.val();
+		save['bg'] = bgSelect.val();
+		save['race'] = raceSelect.val();
 		$.each(abilityList, function(index, ability) {
 			save[ability] = $('#' + ability).val();
 		});
@@ -224,9 +460,12 @@ $(document).ready(function() {
 	$('#load').click(function() {
 		var save = JSON.parse(localStorage.getItem($('#name').val()));
 		classSelect.val(save['class']);
-		classSelect.change();
 		levelInput.val(save['level']);
+		bgSelect.val(save['bg']);
+		raceSelect.val(save['race']);
+		classSelect.change();
 		levelInput.change();
+		raceSelect.change();
 		$.each(abilityList, function(index, ability) {
 			var el = $('#' + ability);
 			el.val(save[ability]);

@@ -8,9 +8,12 @@
 	</head>
 	<body>
 		<label>Name : </label><input type="text" id="name" />
+		<label>Race : </label><select id="race"></select>
 		<label>Class : </label><select id="class"></select>
 		<label>Level : </label><input type="number" id="level" />
-		<label>Proficiency : </label><span id="profMod"></span><br/>
+		<label>Background : </label><select id="bg"></select><br/>
+		<label>Proficiency : </label><span id="profMod"></span>
+		<label>Speed : </label><span id="speed"></span> feet<br/>
 
 		<table id="abilityTable">
 			<tr>
@@ -26,7 +29,7 @@
 
 		<table id="skillTable">
 			<tr>
-				<td>Trained</td>
+				<td>Trained<span id="skillNumber"></span></td>
 				<td>Mod</td>
 			</tr>
 		</table>
