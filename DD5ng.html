@@ -8,12 +8,13 @@
 	</head>
 	<body ng-controller="CharacterController as character">
 		<label>Name : </label><input type="text" ng-model="character.name" />
-		<label>Race : </label><select ng-model="character.race" ng-options="race.name for race in ::character.races"></select>
-		<label>Class : </label><select ng-model="character.class" ng-options="class.name for class in ::character.classes"></select>
+		<label>Race : </label><select ng-model="character.race" ng-options="race.name for race in ::races"></select>
+		<label>Class : </label><select ng-model="character.class" ng-options="class.name for class in ::classes"></select>
 		<label>Level : </label><input type="number" ng-model="character.level" />
-		<label>Background : </label><select ng-model="character.bg" ng-options="bg.name for bg in ::character.bgs"></select><br/>
-		<label>Proficiency : </label>{{toModString(character.profMod)}}</span>
-		<label>Speed : </label>{{character.race.speed}} feet<br/>
+		<label>Background : </label><select ng-model="character.bg" ng-options="bg.name for bg in ::bgs"></select><br/>
+		<label>Proficiency : </label><span>{{toModString(character.profMod)}}</span>
+		<label>Speed : </label><span>{{character.race.speed}} feet</span>
+		<label>Feat number : </label><span>{{character.featNumber}}</span><br/>
 
 		<table>
 			<tr>
@@ -22,7 +23,7 @@
 				<td>Mod</td>
 				<td>Saving throw</td>
 			</tr>
-			<tr ng-repeat="ability in ::character.abilityList">
+			<tr ng-repeat="ability in ::abilityList">
 				<td>{{::capitalizeFirstLetter(ability)}} {{character[ability + 'Bonus']}} : </td>
 				<td><input type="number" ng-model="character[ability]" /></td>
 				<td>{{toModString(character[ability + 'Mod'])}}</td>
@@ -30,18 +31,18 @@
 			</tr>
 		</table>
 
-		<label>Hit point max (average) : </label>{{character.hitPointMax}}<br/>
-		<label>Hit dice : </label>{{character.level}}D{{character.class.hitDice}}
+		<label>Hit point max (average) : </label><span>{{character.hitPointMax}}</span><br/>
+		<label>Hit dice : </label><span>{{character.level}}D{{character.class.hitDice}}</span>
 
 		<table>
 			<tr>
 				<td>Trained{{character.skillNumber}}</td>
 				<td>Mod</td>
 			</tr>
-			<tr ng-repeat="skill in ::character.skillList">
+			<tr ng-repeat="skill in ::skillList">
 				<td><input type="checkbox" ng-model="character[skill + 'Trained']" ng-disabled="character[skill + 'Disabled']" /></td>
 				<td>{{toModString(character[skill + 'Mod'])}}</td>
-				<td>{{::character[skill + 'Name']}}</td>
+				<td>{{::character[skill + 'Title']}}</td>
 			</tr>
 		</table>
 

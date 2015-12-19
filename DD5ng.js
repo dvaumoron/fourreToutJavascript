@@ -38,9 +38,9 @@ angular.module('DD5App',[])
 		
 		character.level = 1;
 
-		character.abilityList = ['str','dex','con','int','wis','cha'];
+		$scope.abilityList = ['str','dex','con','int','wis','cha'];
 
-		character.skillByAbility = {
+		$scope.skillByAbility = {
 			str:['athletics'],
 			dex:['acrobatics', 'sleightOfHand', 'stealth'],
 			con:[],
@@ -49,16 +49,16 @@ angular.module('DD5App',[])
 			cha:['deception', 'intimidation', 'performance', 'persuasion']
 		}
 
-		character.skillList = [];
-		angular.forEach(character.abilityList, function(ability) {
-			angular.forEach(character.skillByAbility[ability], function(skill) {
-				character.skillList.push(skill);
-				character[skill + 'Name'] = capitalizeFirstLetter(spaceCamel(skill)) + '(' + capitalizeFirstLetter(ability) + ')';
+		$scope.skillList = [];
+		angular.forEach($scope.abilityList, function(ability) {
+			angular.forEach($scope.skillByAbility[ability], function(skill) {
+				$scope.skillList.push(skill);
+				character[skill + 'Title'] = capitalizeFirstLetter(spaceCamel(skill)) + '(' + capitalizeFirstLetter(ability) + ')';
 			});
 		});
-		character.skillList.sort();
+		$scope.skillList.sort();
 
-		character.races = [
+		$scope.races = [
 			{
 				name: 'Hill Dwarf',
 				ability: [0, 0, 2, 0, 1, 0],
@@ -172,97 +172,111 @@ angular.module('DD5App',[])
 				skills: []
 			}
 		];
-		character.race = character.races[0];
+		character.race = $scope.races[0];
 
-		character.classes = [
+		var standardFeatProgression = [4, 8, 12, 16, 19];
+
+		$scope.classes = [
 			{
 				name: 'Barbarian',
 				hitDice: 12,
 				savingThrowProf: ['str','con'],
 				skillNumber: 2,
-				skills: ['animalHandling', 'athletics', 'intimidation', 'nature', 'perception', 'survival']
+				skills: ['animalHandling', 'athletics', 'intimidation', 'nature', 'perception', 'survival'],
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Bard',
 				hitDice: 8,
 				savingThrowProf: ['dex','cha'],
 				skillNumber: 3,
-				skills: character.skillList
+				skills: character.skillList,
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Cleric',
 				hitDice: 8,
 				savingThrowProf: ['wis','cha'],
 				skillNumber: 2,
-				skills: ['history', 'insight', 'medecine', 'persuasion', 'religion']
+				skills: ['history', 'insight', 'medecine', 'persuasion', 'religion'],
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Druid',
 				hitDice: 8,
 				savingThrowProf: ['int','wis'],
 				skillNumber: 2,
-				skills: ['arcana', 'animalHandling', 'insight', 'medecine', 'nature', 'perception', 'religion', 'survival']
+				skills: ['arcana', 'animalHandling', 'insight', 'medecine', 'nature', 'perception', 'religion', 'survival'],
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Fighter',
 				hitDice: 10,
 				savingThrowProf: ['str','con'],
 				skillNumber: 2,
-				skills: ['acrobatics', 'animalHandling', 'athletics', 'history', 'insight', 'intimidation', 'perception', 'survival']
+				skills: ['acrobatics', 'animalHandling', 'athletics', 'history', 'insight', 'intimidation', 'perception', 'survival'],
+				featProgression: [4, 6, 8, 12, 14, 16, 19]
 			},
 			{
 				name: 'Monk',
 				hitDice: 8,
 				savingThrowProf: ['str','dex'],
 				skillNumber: 2,
-				skills: ['acrobatics', 'athletics', 'history', 'insight', 'religion', 'stealth']
+				skills: ['acrobatics', 'athletics', 'history', 'insight', 'religion', 'stealth'],
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Paladin',
 				hitDice: 10,
 				savingThrowProf: ['wis','cha'],
 				skillNumber: 2,
-				skills: ['athletics', 'insight', 'intimidation', 'medecine', 'persuasion', 'religion']
+				skills: ['athletics', 'insight', 'intimidation', 'medecine', 'persuasion', 'religion'],
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Ranger',
 				hitDice: 10,
 				savingThrowProf: ['str','dex'],
 				skillNumber: 3,
-				skills: ['animalHandling', 'athletics', 'insight', 'investigation', 'nature', 'perception', 'stealth', 'survival']
+				skills: ['animalHandling', 'athletics', 'insight', 'investigation', 'nature', 'perception', 'stealth', 'survival'],
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Rogue',
 				hitDice: 8,
 				savingThrowProf: ['dex','int'],
 				skillNumber: 4,
-				skills: ['acrobatics', 'athletics', 'deception', 'insight', 'intimidation', 'investigation', 'perception', 'performance', 'persuasion', 'sleightOfHand', 'stealth']
+				skills: ['acrobatics', 'athletics', 'deception', 'insight', 'intimidation', 'investigation', 'perception', 'performance', 'persuasion', 'sleightOfHand', 'stealth'],
+				featProgression: [4, 8, 10, 12, 16, 19]
 			},
 			{
 				name: 'Sorcerer',
 				hitDice: 6,
 				savingThrowProf: ['con','cha'],
 				skillNumber: 2,
-				skills: ['arcana', 'deception', 'insight', 'intimidation', 'persuasion', 'religion']
+				skills: ['arcana', 'deception', 'insight', 'intimidation', 'persuasion', 'religion'],
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Warlock',
 				hitDice: 8,
 				savingThrowProf: ['wis','cha'],
 				skillNumber: 2,
-				skills: ['arcana', 'deception', 'history', 'intimidation', 'investigation', 'nature', 'religion']
+				skills: ['arcana', 'deception', 'history', 'intimidation', 'investigation', 'nature', 'religion'],
+				featProgression: standardFeatProgression
 			},
 			{
 				name: 'Wizard',
 				hitDice: 6,
 				savingThrowProf: ['int','wis'],
 				skillNumber: 2,
-				skills: ['arcana', 'history', 'insight', 'investigation', 'medecine', 'religion']
+				skills: ['arcana', 'history', 'insight', 'investigation', 'medecine', 'religion'],
+				featProgression: standardFeatProgression
 			}
 		];
-		character.class = character.classes[0]; 
+		character.class = $scope.classes[0]; 
 
-		character.bgs = [
+		$scope.bgs = [
 			{
 				name: 'Acolyte',
 				skills: ['insight', 'religion']
@@ -316,16 +330,14 @@ angular.module('DD5App',[])
 				skills: ['sleightOfHand', 'stealth']
 			}
 		];
-		character.bg = character.bgs[0];
+		character.bg = $scope.bgs[0];
 
 		character.updateHPMax = function() {
-			var classHitDice = character.class.hitDice;
-			var raceHitPoint = character.race.hitPoint;
-			character.hitPointMax = classHitDice + character.level * (character.conMod + raceHitPoint) + (character.level - 1) * (classHitDice / 2 + 1);
+			character.hitPointMax = character.class.hitDice + character.level * (character.conMod + character.race.hitPoint) + (character.level - 1) * (character.class.hitDice / 2 + 1);
 		}
 
 		character.updateST = function() {
-			angular.forEach(character.abilityList, function(ability) {
+			angular.forEach($scope.abilityList, function(ability) {
 				if (character.class.savingThrowProf.indexOf(ability) != -1) {
 					character[ability + 'ST'] = character[ability + 'Mod'] + character.profMod;
 				} else {
@@ -336,7 +348,7 @@ angular.module('DD5App',[])
 
 		character.displaySkillNumber = function() {
 			var skillNumber = character.class.skillNumber + 2 + character.race.skillNumber;
-			angular.forEach(character.skillList, function(skill) {
+			angular.forEach($scope.skillList, function(skill) {
 				if (character[skill + 'Trained']) {
 					skillNumber -= 1;
 				}
@@ -351,8 +363,8 @@ angular.module('DD5App',[])
 		}
 
 		character.updateSkill = function() {
-			angular.forEach(character.abilityList, function(ability) {
-				angular.forEach(character.skillByAbility[ability], function(skill) {
+			angular.forEach($scope.abilityList, function(ability) {
+				angular.forEach($scope.skillByAbility[ability], function(skill) {
 					if (character[skill + 'Trained']) {
 						character[skill + 'Mod'] = character[ability + 'Mod'] + character.profMod;
 					} else {
@@ -363,7 +375,7 @@ angular.module('DD5App',[])
 		}
 
 		character.updateSkillList = function() {
-			angular.forEach(character.skillList, function(skill) {
+			angular.forEach($scope.skillList, function(skill) {
 				character[skill + 'Trained'] = false;
 				character[skill + 'Disabled'] = true;
 			});
@@ -381,15 +393,26 @@ angular.module('DD5App',[])
 			character.displaySkillNumber();
 		}
 
-		$scope.$watch('character.con', function(newValue, oldValue) {
+		character.updateFeatNumber = function() {
+			var featNumber = 0;
+			angular.forEach(character.class.featProgression, function(featLevel) {
+				if (character.level >= featLevel) {
+					featNumber += 1;
+				}
+			});
+			character.featNumber = featNumber;
+		};
+
+		$scope.$watch('character.conMod', function(newValue, oldValue) {
 			character.updateHPMax();
 		});
 
 		$scope.$watch("character.level", function(newValue, oldValue) {
-			character.profMod = calculateProf(newValue, true);
+			character.profMod = calculateProf(newValue);
 			character.updateHPMax();
 			character.updateST();
 			character.updateSkill();
+			character.updateFeatNumber();
 		});
 
 		$scope.$watch("character.class", function(newValue, oldValue) {
@@ -397,6 +420,7 @@ angular.module('DD5App',[])
 			character.updateST();
 			character.updateSkillList();
 			character.updateSkill();
+			character.updateFeatNumber();
 		});
 
 		$scope.$watch("character.bg", function(newValue, oldValue) {
@@ -406,7 +430,7 @@ angular.module('DD5App',[])
 
 		$scope.$watch("character.race", function(newValue, oldValue) {
 			var index = 0;
-			angular.forEach(character.abilityList, function(ability) {
+			angular.forEach($scope.abilityList, function(ability) {
 				var abilityBonus = newValue.ability[index];
 				var abilityBonusStr;
 				if (abilityBonus == 0) {
@@ -422,7 +446,7 @@ angular.module('DD5App',[])
 			character.updateSkill();
 		});
 
-		angular.forEach(character.abilityList, function(ability) {
+		angular.forEach($scope.abilityList, function(ability) {
 			character[ability] = 10;
 
 			$scope.$watch('character.' + ability, function(newValue, oldValue) {
@@ -433,7 +457,7 @@ angular.module('DD5App',[])
 				} else {
 					character[ability + 'ST'] = mod;
 				}
-				angular.forEach(character.skillByAbility[ability], function(skill) {
+				angular.forEach($scope.skillByAbility[ability], function(skill) {
 					if (character[skill + 'Trained']) {
 						character[skill + 'Mod'] = mod + character.profMod;
 					} else {
@@ -442,7 +466,7 @@ angular.module('DD5App',[])
 				});
 			});
 
-			angular.forEach(character.skillByAbility[ability], function(skill) {
+			angular.forEach($scope.skillByAbility[ability], function(skill) {
 				$scope.$watch('character.' + skill + 'Trained', function(newValue, oldValue) {
 					if (newValue) {
 						character[skill + 'Mod'] = character[ability + 'Mod'] + character.profMod;
@@ -456,15 +480,15 @@ angular.module('DD5App',[])
 
 		character.save = function() {
 			var save = {
-				class: character.class,
-				level: character.level,
-				bg: character.bg,
-				race: character.race
+				race: character.race.name,
+				class: character.class.name,
+				bg: character.bg.name,
+				level: character.level
 			};
-			angular.forEach(character.abilityList, function(ability) {
+			angular.forEach($scope.abilityList, function(ability) {
 				save[ability] = character[ability];
 			});
-			angular.forEach(character.skillList, function(skill) {
+			angular.forEach($scope.skillList, function(skill) {
 				save[skill] = character[skill + 'Trained'];
 			});
 			localStorage.setItem(character.name, JSON.stringify(save));
@@ -473,14 +497,26 @@ angular.module('DD5App',[])
 
 		character.load = function() {
 			var save = JSON.parse(localStorage.getItem(character.name));
-			character.class = save.class;
+			angular.forEach($scope.races, function(race) {
+				if (race.name == save.race) {
+					character.race = race;
+				}
+			});
+			angular.forEach($scope.classes, function(classe) {
+				if (classe.name == save.class) {
+					character.class = classe;
+				}
+			});
+			angular.forEach($scope.bgs, function(bg) {
+				if (bg.name == save.bg) {
+					character.bg = bg;
+				}
+			});
 			character.level = save.level;
-			character.bg = save.bg;
-			character.race = save.race;
-			angular.forEach(character.abilityList, function(ability) {
+			angular.forEach($scope.abilityList, function(ability) {
 				character[ability] = save[ability];
 			});
-			angular.forEach(character.skillList, function(skill) {
+			angular.forEach($scope.skillList, function(skill) {
 				character[skill + 'Trained'] = save[skill];
 			});
 		};
