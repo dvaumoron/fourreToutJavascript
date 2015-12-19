@@ -132,8 +132,8 @@ $(document).ready(function() {
 			ability: [0, 0, 0, 1, 0, 2],
 			speed: 30,
 			hitPoint: 0,
-			skillNumber: 1,
-			skills: ['intimidation']
+			skillNumber: 0,
+			skills: []
 		}
 	};
 

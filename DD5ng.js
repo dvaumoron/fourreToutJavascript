@@ -165,8 +165,8 @@ angular.module('DD5App',[])
 				ability: [0, 0, 0, 1, 0, 2],
 				speed: 30,
 				hitPoint: 0,
-				skillNumber: 1,
-				skills: ['intimidation']
+				skillNumber: 0,
+				skills: []
 			}
 		];
 		character.race = character.races[0];
