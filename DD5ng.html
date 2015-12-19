@@ -11,6 +11,9 @@
 		<label>Race : </label><select ng-model="character.race" ng-options="race.name for race in ::races"></select>
 		<label>Class : </label><select ng-model="character.class" ng-options="class.name for class in ::classes"></select>
 		<label>Level : </label><input type="number" ng-model="character.level" />
+		<span ng-show="character.level >= character.class.pathLevel">
+			<label>{{character.class.pathName}} : </label><select ng-model="character.path" ng-options="path.name for path in character.class.paths"></select>
+		</span>
 		<label>Background : </label><select ng-model="character.bg" ng-options="bg.name for bg in ::bgs"></select><br/>
 		<label>Proficiency : </label><span>{{toModString(character.profMod)}}</span>
 		<label>Speed : </label><span>{{character.race.speed}} feet</span>
@@ -42,7 +45,7 @@
 			<tr ng-repeat="skill in ::skillList">
 				<td><input type="checkbox" ng-model="character[skill + 'Trained']" ng-disabled="character[skill + 'Disabled']" /></td>
 				<td>{{toModString(character[skill + 'Mod'])}}</td>
-				<td>{{::character[skill + 'Title']}}</td>
+				<td>{{::title[skill]}}</td>
 			</tr>
 		</table>
 

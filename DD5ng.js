@@ -50,10 +50,11 @@ angular.module('DD5App',[])
 		}
 
 		$scope.skillList = [];
+		$scope.title = {};
 		angular.forEach($scope.abilityList, function(ability) {
 			angular.forEach($scope.skillByAbility[ability], function(skill) {
 				$scope.skillList.push(skill);
-				character[skill + 'Title'] = capitalizeFirstLetter(spaceCamel(skill)) + '(' + capitalizeFirstLetter(ability) + ')';
+				$scope.title[skill] = capitalizeFirstLetter(spaceCamel(skill)) + ' (' + capitalizeFirstLetter(ability) + ')';
 			});
 		});
 		$scope.skillList.sort();
@@ -183,15 +184,35 @@ angular.module('DD5App',[])
 				savingThrowProf: ['str','con'],
 				skillNumber: 2,
 				skills: ['animalHandling', 'athletics', 'intimidation', 'nature', 'perception', 'survival'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Primal Path',
+				pathLevel: 3,
+				paths: [
+					{
+						name: 'Path of the Berserker'
+					},
+					{
+						name: 'Path of the Totem Warrior'
+					}
+				]
 			},
 			{
 				name: 'Bard',
 				hitDice: 8,
 				savingThrowProf: ['dex','cha'],
 				skillNumber: 3,
-				skills: character.skillList,
-				featProgression: standardFeatProgression
+				skills: $scope.skillList,
+				featProgression: standardFeatProgression,
+				pathName: 'Bard College',
+				pathLevel: 3,
+				paths: [
+					{
+						name: 'College of Lore'
+					},
+					{
+						name: 'College of Valor'
+					}
+				]
 			},
 			{
 				name: 'Cleric',
@@ -199,7 +220,32 @@ angular.module('DD5App',[])
 				savingThrowProf: ['wis','cha'],
 				skillNumber: 2,
 				skills: ['history', 'insight', 'medecine', 'persuasion', 'religion'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Divine Domain',
+				pathLevel: 1,
+				paths: [
+					{
+						name: 'Knowledge Domain'
+					},
+					{
+						name: 'Life Domain'
+					},
+					{
+						name: 'Light Domain'
+					},
+					{
+						name: 'Nature Domain'
+					},
+					{
+						name: 'Tempest Domain'
+					},
+					{
+						name: 'Trickery Domain'
+					},
+					{
+						name: 'War Domain'
+					}
+				]
 			},
 			{
 				name: 'Druid',
@@ -207,7 +253,17 @@ angular.module('DD5App',[])
 				savingThrowProf: ['int','wis'],
 				skillNumber: 2,
 				skills: ['arcana', 'animalHandling', 'insight', 'medecine', 'nature', 'perception', 'religion', 'survival'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Druid Circle',
+				pathLevel: 2,
+				paths: [
+					{
+						name: 'Circle of the Land'
+					},
+					{
+						name: 'Circle of the Moon'
+					}
+				]
 			},
 			{
 				name: 'Fighter',
@@ -215,7 +271,20 @@ angular.module('DD5App',[])
 				savingThrowProf: ['str','con'],
 				skillNumber: 2,
 				skills: ['acrobatics', 'animalHandling', 'athletics', 'history', 'insight', 'intimidation', 'perception', 'survival'],
-				featProgression: [4, 6, 8, 12, 14, 16, 19]
+				featProgression: [4, 6, 8, 12, 14, 16, 19],
+				pathName: 'Martial Archetype',
+				pathLevel: 3,
+				paths: [
+					{
+						name: 'Champion'
+					},
+					{
+						name: 'Battle Master'
+					},
+					{
+						name: 'Eldricht Knight'
+					}
+				]
 			},
 			{
 				name: 'Monk',
@@ -223,7 +292,20 @@ angular.module('DD5App',[])
 				savingThrowProf: ['str','dex'],
 				skillNumber: 2,
 				skills: ['acrobatics', 'athletics', 'history', 'insight', 'religion', 'stealth'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Monastic Tradition',
+				pathLevel: 3,
+				paths: [
+					{
+						name: 'Way of the Open Hand'
+					},
+					{
+						name: 'Way of Shadow'
+					},
+					{
+						name: 'Way of the Four Elements'
+					}
+				]
 			},
 			{
 				name: 'Paladin',
@@ -231,7 +313,20 @@ angular.module('DD5App',[])
 				savingThrowProf: ['wis','cha'],
 				skillNumber: 2,
 				skills: ['athletics', 'insight', 'intimidation', 'medecine', 'persuasion', 'religion'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Sacred Oath',
+				pathLevel: 3,
+				paths: [
+					{
+						name: 'Oath of Devotion'
+					},
+					{
+						name: 'Oath of the Ancients'
+					},
+					{
+						name: 'Oath of Vengeance'
+					}
+				]
 			},
 			{
 				name: 'Ranger',
@@ -239,7 +334,17 @@ angular.module('DD5App',[])
 				savingThrowProf: ['str','dex'],
 				skillNumber: 3,
 				skills: ['animalHandling', 'athletics', 'insight', 'investigation', 'nature', 'perception', 'stealth', 'survival'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Ranger Archetype',
+				pathLevel: 3,
+				paths: [
+					{
+						name: 'Hunter'
+					},
+					{
+						name: 'Beast Master'
+					}
+				]
 			},
 			{
 				name: 'Rogue',
@@ -247,7 +352,20 @@ angular.module('DD5App',[])
 				savingThrowProf: ['dex','int'],
 				skillNumber: 4,
 				skills: ['acrobatics', 'athletics', 'deception', 'insight', 'intimidation', 'investigation', 'perception', 'performance', 'persuasion', 'sleightOfHand', 'stealth'],
-				featProgression: [4, 8, 10, 12, 16, 19]
+				featProgression: [4, 8, 10, 12, 16, 19],
+				pathName: 'Roguish Archetype',
+				pathLevel: 3,
+				paths: [
+					{
+						name: 'Thief'
+					},
+					{
+						name: 'Assassin'
+					},
+					{
+						name: 'Arcane Trickster'
+					}
+				]
 			},
 			{
 				name: 'Sorcerer',
@@ -255,7 +373,17 @@ angular.module('DD5App',[])
 				savingThrowProf: ['con','cha'],
 				skillNumber: 2,
 				skills: ['arcana', 'deception', 'insight', 'intimidation', 'persuasion', 'religion'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Sorcerous Origin',
+				pathLevel: 1,
+				paths: [
+					{
+						name: 'Draconic Bloodline'
+					},
+					{
+						name: 'Wild Magic'
+					}
+				]
 			},
 			{
 				name: 'Warlock',
@@ -263,7 +391,20 @@ angular.module('DD5App',[])
 				savingThrowProf: ['wis','cha'],
 				skillNumber: 2,
 				skills: ['arcana', 'deception', 'history', 'intimidation', 'investigation', 'nature', 'religion'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Otherworldly Patron',
+				pathLevel: 1,
+				paths: [
+					{
+						name: 'The Archfey'
+					},
+					{
+						name: 'The Fiend'
+					},
+					{
+						name: 'The Great Old One'
+					}
+				]
 			},
 			{
 				name: 'Wizard',
@@ -271,7 +412,35 @@ angular.module('DD5App',[])
 				savingThrowProf: ['int','wis'],
 				skillNumber: 2,
 				skills: ['arcana', 'history', 'insight', 'investigation', 'medecine', 'religion'],
-				featProgression: standardFeatProgression
+				featProgression: standardFeatProgression,
+				pathName: 'Arcane Tradition',
+				pathLevel: 2,
+				paths: [
+					{
+						name: 'School of Abjuration'
+					},
+					{
+						name: 'School of Conjuration'
+					},
+					{
+						name: 'School of Divination'
+					},
+					{
+						name: 'School of Enchantment'
+					},
+					{
+						name: 'School of Evocation'
+					},
+					{
+						name: 'School of Illusion'
+					},
+					{
+						name: 'School of Necromancy'
+					},
+					{
+						name: 'School of Transmutation'
+					}
+				]
 			}
 		];
 		character.class = $scope.classes[0]; 
@@ -416,6 +585,7 @@ angular.module('DD5App',[])
 		});
 
 		$scope.$watch("character.class", function(newValue, oldValue) {
+			character.path = newValue.paths[0]; 
 			character.updateHPMax();
 			character.updateST();
 			character.updateSkillList();
@@ -483,13 +653,17 @@ angular.module('DD5App',[])
 				race: character.race.name,
 				class: character.class.name,
 				bg: character.bg.name,
-				level: character.level
+				level: character.level,
+				path: character.path.name
 			};
 			angular.forEach($scope.abilityList, function(ability) {
 				save[ability] = character[ability];
 			});
+			save.skills = [];
 			angular.forEach($scope.skillList, function(skill) {
-				save[skill] = character[skill + 'Trained'];
+				if (character[skill + 'Trained']) {
+					save.skills.push(skill);
+				}
 			});
 			localStorage.setItem(character.name, JSON.stringify(save));
 			alert(character.name + ' saved');
@@ -507,6 +681,11 @@ angular.module('DD5App',[])
 					character.class = classe;
 				}
 			});
+			angular.forEach(character.class.paths, function(path) {
+				if (path.name = save.path) {
+					character.path = path;
+				}
+			});
 			angular.forEach($scope.bgs, function(bg) {
 				if (bg.name == save.bg) {
 					character.bg = bg;
@@ -516,8 +695,8 @@ angular.module('DD5App',[])
 			angular.forEach($scope.abilityList, function(ability) {
 				character[ability] = save[ability];
 			});
-			angular.forEach($scope.skillList, function(skill) {
-				character[skill + 'Trained'] = save[skill];
+			angular.forEach(save.skills, function(skill) {
+				character[skill + 'Trained'] = true;
 			});
 		};
 
