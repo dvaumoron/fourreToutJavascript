@@ -15,15 +15,15 @@ function toModString(mod) {
 	return modStr;
 }
 
-function calculateMod(score, warn) {
-	if (warn && (score < 1 || score > 20)) {
+function calculateMod(score) {
+	if (score < 1 || score > 20) {
 		alert('score should be between 1 and 20');
 	}
 	return Math.floor((score - 10) / 2);
 }
 
-function calculateProf(level, warn) {
-	if (warn && (level < 1 || level > 20)) {
+function calculateProf(level) {
+	if (level < 1 || level > 20) {
 		alert('level should be between 1 and 20');
 	} 
 	return 1 + Math.ceil(level / 4);
@@ -33,6 +33,9 @@ angular.module('DD5App',[])
 	.controller('CharacterController', function($scope) {
 		var character = this;
 
+		$scope.capitalizeFirstLetter = capitalizeFirstLetter;
+		$scope.toModString = toModString
+		
 		character.level = 1;
 
 		character.abilityList = ['str','dex','con','int','wis','cha'];
@@ -317,20 +320,16 @@ angular.module('DD5App',[])
 
 		character.updateHPMax = function() {
 			var classHitDice = character.class.hitDice;
-			var conMod = calculateMod(character.con, false);
 			var raceHitPoint = character.race.hitPoint;
-			character.hitPointMax = classHitDice + character.level * (conMod + raceHitPoint) + (character.level - 1) * (classHitDice / 2 + 1);
+			character.hitPointMax = classHitDice + character.level * (character.conMod + raceHitPoint) + (character.level - 1) * (classHitDice / 2 + 1);
 		}
 
 		character.updateST = function() {
-			var prof = calculateProf(character.level, false);
-			var stProf = character.class.savingThrowProf;
 			angular.forEach(character.abilityList, function(ability) {
-				var mod = calculateMod(character[ability], false);
-				if (stProf.indexOf(ability) != -1) {
-					character[ability + 'ST'] = toModString(mod + prof);
+				if (character.class.savingThrowProf.indexOf(ability) != -1) {
+					character[ability + 'ST'] = character[ability + 'Mod'] + character.profMod;
 				} else {
-					character[ability + 'ST'] = toModString(mod);
+					character[ability + 'ST'] = character[ability + 'Mod'];
 				}
 			});
 		}
@@ -352,14 +351,12 @@ angular.module('DD5App',[])
 		}
 
 		character.updateSkill = function() {
-			var prof = calculateProf(character.level, false);
 			angular.forEach(character.abilityList, function(ability) {
-				var mod = calculateMod(character[ability], false);
 				angular.forEach(character.skillByAbility[ability], function(skill) {
 					if (character[skill + 'Trained']) {
-						character[skill + 'Mod'] = toModString(mod + prof);
+						character[skill + 'Mod'] = character[ability + 'Mod'] + character.profMod;
 					} else {
-						character[skill + 'Mod'] = toModString(mod);
+						character[skill + 'Mod'] = character[ability + 'Mod'];
 					}
 				});
 			});
@@ -389,7 +386,7 @@ angular.module('DD5App',[])
 		});
 
 		$scope.$watch("character.level", function(newValue, oldValue) {
-			character.profMod = toModString(calculateProf(newValue, true));
+			character.profMod = calculateProf(newValue, true);
 			character.updateHPMax();
 			character.updateST();
 			character.updateSkill();
@@ -408,10 +405,9 @@ angular.module('DD5App',[])
 		});
 
 		$scope.$watch("character.race", function(newValue, oldValue) {
-			var abilityBonusArray = newValue.ability;
 			var index = 0;
 			angular.forEach(character.abilityList, function(ability) {
-				var abilityBonus = abilityBonusArray[index];
+				var abilityBonus = newValue.ability[index];
 				var abilityBonusStr;
 				if (abilityBonus == 0) {
 					abilityBonusStr = '';
@@ -427,36 +423,31 @@ angular.module('DD5App',[])
 		});
 
 		angular.forEach(character.abilityList, function(ability) {
-			character[ability + 'Name'] = capitalizeFirstLetter(ability);
 			character[ability] = 10;
 
 			$scope.$watch('character.' + ability, function(newValue, oldValue) {
-				var prof = calculateProf(character.level, false);
-				var stProf = character.class.savingThrowProf;
-				var mod = calculateMod(newValue, true);
-				character[ability + 'Mod'] = toModString(mod);
-				if (stProf.indexOf(ability) != -1) {
-					character[ability + 'ST'] = toModString(mod + prof);
+				var mod = calculateMod(newValue);
+				character[ability + 'Mod'] = mod;
+				if (character.class.savingThrowProf.indexOf(ability) != -1) {
+					character[ability + 'ST'] = mod + character.profMod;
 				} else {
-					character[ability + 'ST'] = toModString(mod);
+					character[ability + 'ST'] = mod;
 				}
 				angular.forEach(character.skillByAbility[ability], function(skill) {
 					if (character[skill + 'Trained']) {
-						character[skill + 'Mod'] = toModString(mod + prof);
+						character[skill + 'Mod'] = mod + character.profMod;
 					} else {
-						character[skill + 'Mod'] = toModString(mod);
+						character[skill + 'Mod'] = mod;
 					}
 				});
 			});
 
 			angular.forEach(character.skillByAbility[ability], function(skill) {
 				$scope.$watch('character.' + skill + 'Trained', function(newValue, oldValue) {
-					var prof = calculateProf(character.level, false);
-					var mod = calculateMod(character[ability], false);
 					if (newValue) {
-						character[skill + 'Mod'] = toModString(mod + prof);
+						character[skill + 'Mod'] = character[ability + 'Mod'] + character.profMod;
 					} else {
-						character[skill + 'Mod'] = toModString(mod);
+						character[skill + 'Mod'] = character[ability + 'Mod'];
 					}
 					character.displaySkillNumber();
 				});
@@ -464,11 +455,12 @@ angular.module('DD5App',[])
 		});
 
 		character.save = function() {
-			var save = {};
-			save.class = character.class;
-			save.level = character.level;
-			save.bg = character.bg;
-			save.race = character.race;
+			var save = {
+				class: character.class,
+				level: character.level,
+				bg: character.bg,
+				race: character.race
+			};
 			angular.forEach(character.abilityList, function(ability) {
 				save[ability] = character[ability];
 			});

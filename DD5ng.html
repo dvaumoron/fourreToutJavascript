@@ -12,7 +12,7 @@
 		<label>Class : </label><select ng-model="character.class" ng-options="class.name for class in ::character.classes"></select>
 		<label>Level : </label><input type="number" ng-model="character.level" />
 		<label>Background : </label><select ng-model="character.bg" ng-options="bg.name for bg in ::character.bgs"></select><br/>
-		<label>Proficiency : </label>{{character.profMod}}</span>
+		<label>Proficiency : </label>{{toModString(character.profMod)}}</span>
 		<label>Speed : </label>{{character.race.speed}} feet<br/>
 
 		<table>
@@ -23,10 +23,10 @@
 				<td>Saving throw</td>
 			</tr>
 			<tr ng-repeat="ability in ::character.abilityList">
-				<td>{{::character[ability + 'Name']}} {{character[ability + 'Bonus']}} : </td>
+				<td>{{::capitalizeFirstLetter(ability)}} {{character[ability + 'Bonus']}} : </td>
 				<td><input type="number" ng-model="character[ability]" /></td>
-				<td>{{character[ability + 'Mod']}}</td>
-				<td>{{character[ability + 'ST']}}</td>
+				<td>{{toModString(character[ability + 'Mod'])}}</td>
+				<td>{{toModString(character[ability + 'ST'])}}</td>
 			</tr>
 		</table>
 
@@ -40,7 +40,7 @@
 			</tr>
 			<tr ng-repeat="skill in ::character.skillList">
 				<td><input type="checkbox" ng-model="character[skill + 'Trained']" ng-disabled="character[skill + 'Disabled']" /></td>
-				<td>{{character[skill + 'Mod']}}</td>
+				<td>{{toModString(character[skill + 'Mod'])}}</td>
 				<td>{{::character[skill + 'Name']}}</td>
 			</tr>
 		</table>
