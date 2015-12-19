@@ -1,0 +1,52 @@
+<!doctype html>
+<html ng-app="DD5App">
+	<head>
+		<meta charset="utf-8">
+		<title>DD5</title>
+		<script src="angular.min.js"></script>
+		<script src="DD5ng.js"></script>
+	</head>
+	<body ng-controller="CharacterController as character">
+		<label>Name : </label><input type="text" ng-model="character.name" />
+		<label>Race : </label><select ng-model="character.race" ng-options="race.name for race in ::character.races"></select>
+		<label>Class : </label><select ng-model="character.class" ng-options="class.name for class in ::character.classes"></select>
+		<label>Level : </label><input type="number" ng-model="character.level" />
+		<label>Background : </label><select ng-model="character.bg" ng-options="bg.name for bg in ::character.bgs"></select><br/>
+		<label>Proficiency : </label>{{character.profMod}}</span>
+		<label>Speed : </label>{{character.race.speed}} feet<br/>
+
+		<table>
+			<tr>
+				<td/>
+				<td>Score</td>
+				<td>Mod</td>
+				<td>Saving throw</td>
+			</tr>
+			<tr ng-repeat="ability in ::character.abilityList">
+				<td>{{::character[ability + 'Name']}} {{character[ability + 'Bonus']}} : </td>
+				<td><input type="number" ng-model="character[ability]" /></td>
+				<td>{{character[ability + 'Mod']}}</td>
+				<td>{{character[ability + 'ST']}}</td>
+			</tr>
+		</table>
+
+		<label>Hit point max (average) : </label>{{character.hitPointMax}}<br/>
+		<label>Hit dice : </label>{{character.level}}D{{character.class.hitDice}}
+
+		<table>
+			<tr>
+				<td>Trained{{character.skillNumber}}</td>
+				<td>Mod</td>
+			</tr>
+			<tr ng-repeat="skill in ::character.skillList">
+				<td><input type="checkbox" ng-model="character[skill + 'Trained']" ng-disabled="character[skill + 'Disabled']" /></td>
+				<td>{{character[skill + 'Mod']}}</td>
+				<td>{{::character[skill + 'Name']}}</td>
+			</tr>
+		</table>
+
+		<input type="button" value="Save" ng-click="character.save()" />
+		<input type="button" value="Load" ng-click="character.load()" />
+		<input type="button" value="Remove" ng-click="character.remove()" />
+	</body>
+</html>
