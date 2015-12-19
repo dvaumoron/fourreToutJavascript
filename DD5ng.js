@@ -1,41 +1,22 @@
-function capitalizeFirstLetter(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function spaceCamel(string) {
-	return string.replace(/([A-Z])/g, ' $1')
-}
-
-function toModString(mod) {
-	var modStr = '';
-	if (mod >= 0) {
-		modStr += '+';
-	}
-	modStr += mod.toString();
-	return modStr;
-}
-
-function calculateMod(score) {
-	if (score < 1 || score > 20) {
-		alert('score should be between 1 and 20');
-	}
-	return Math.floor((score - 10) / 2);
-}
-
-function calculateProf(level) {
-	if (level < 1 || level > 20) {
-		alert('level should be between 1 and 20');
-	} 
-	return 1 + Math.ceil(level / 4);
-}
-
 angular.module('DD5App',[])
 	.controller('CharacterController', function($scope) {
 		var character = this;
 
-		$scope.capitalizeFirstLetter = capitalizeFirstLetter;
-		$scope.toModString = toModString
-		
+		$scope.capitalizeFirstLetter = function(string) {
+			return string.charAt(0).toUpperCase() + string.slice(1);
+		};
+		$scope.toModString = function(mod) {
+			var modStr = '';
+			if (mod >= 0) {
+				modStr += '+';
+			}
+			modStr += mod.toString();
+			return modStr;
+		};
+		function spaceCamel(string) {
+			return string.replace(/([A-Z])/g, ' $1')
+		}
+
 		character.level = 1;
 
 		$scope.abilityList = ['str','dex','con','int','wis','cha'];
@@ -54,7 +35,7 @@ angular.module('DD5App',[])
 		angular.forEach($scope.abilityList, function(ability) {
 			angular.forEach($scope.skillByAbility[ability], function(skill) {
 				$scope.skillList.push(skill);
-				$scope.title[skill] = capitalizeFirstLetter(spaceCamel(skill)) + ' (' + capitalizeFirstLetter(ability) + ')';
+				$scope.title[skill] = $scope.capitalizeFirstLetter(spaceCamel(skill)) + ' (' + $scope.capitalizeFirstLetter(ability) + ')';
 			});
 		});
 		$scope.skillList.sort();
@@ -577,7 +558,7 @@ angular.module('DD5App',[])
 		});
 
 		$scope.$watch("character.level", function(newValue, oldValue) {
-			character.profMod = calculateProf(newValue);
+			character.profMod = 1 + Math.ceil(newValue / 4);
 			character.updateHPMax();
 			character.updateST();
 			character.updateSkill();
@@ -620,7 +601,7 @@ angular.module('DD5App',[])
 			character[ability] = 10;
 
 			$scope.$watch('character.' + ability, function(newValue, oldValue) {
-				var mod = calculateMod(newValue);
+				var mod = Math.floor((newValue - 10) / 2);
 				character[ability + 'Mod'] = mod;
 				if (character.class.savingThrowProf.indexOf(ability) != -1) {
 					character[ability + 'ST'] = mod + character.profMod;
@@ -691,8 +672,8 @@ angular.module('DD5App',[])
 			angular.forEach($scope.abilityList, function(ability) {
 				character[ability] = save[ability];
 			});
-			angular.forEach(save.skills, function(skill) {
-				character[skill + 'Trained'] = true;
+			angular.forEach($scope.skillList, function(skill) {
+				character[skill + 'Trained'] = save.skills.indexOf(skill) != -1;
 			});
 		};
 
