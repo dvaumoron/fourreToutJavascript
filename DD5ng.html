@@ -12,7 +12,10 @@
 		<label>Class : </label><select ng-model="character.class" ng-options="class.name for class in ::classes"></select>
 		<label>Level : </label><input type="number" ng-model="character.level" />
 		<span ng-show="character.level >= character.class.pathLevel">
-			<label>{{character.class.pathName}} : </label><select ng-model="character.path" ng-options="path.name for path in character.class.paths"></select>
+			<label>{{character.class.pathName}} : </label>
+			<select ng-model="character.path">
+				<option ng-repeat="path in character.class.paths" key="{{path.name}}">{{path.name}}</option>
+			</select>
 		</span>
 		<label>Background : </label><select ng-model="character.bg" ng-options="bg.name for bg in ::bgs"></select><br/>
 		<label>Proficiency : </label><span>{{toModString(character.profMod)}}</span>

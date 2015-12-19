@@ -585,7 +585,7 @@ angular.module('DD5App',[])
 		});
 
 		$scope.$watch("character.class", function(newValue, oldValue) {
-			character.path = newValue.paths[0]; 
+			character.path = newValue.paths[0].name; 
 			character.updateHPMax();
 			character.updateST();
 			character.updateSkillList();
@@ -681,11 +681,7 @@ angular.module('DD5App',[])
 					character.class = classe;
 				}
 			});
-			angular.forEach(character.class.paths, function(path) {
-				if (path.name = save.path) {
-					character.path = path;
-				}
-			});
+			character.path = save.path;
 			angular.forEach($scope.bgs, function(bg) {
 				if (bg.name == save.bg) {
 					character.bg = bg;
