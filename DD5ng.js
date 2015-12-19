@@ -654,7 +654,7 @@ angular.module('DD5App',[])
 				class: character.class.name,
 				bg: character.bg.name,
 				level: character.level,
-				path: character.path.name
+				path: character.path
 			};
 			angular.forEach($scope.abilityList, function(ability) {
 				save[ability] = character[ability];
