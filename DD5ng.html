@@ -13,7 +13,7 @@
 		<label>Level : </label><input type="number" ng-model="character.level" />
 		<span ng-show="character.level >= character.class.pathLevel">
 			<label>{{character.class.pathName}} : </label>
-			<select ng-model="character.path">
+			<select ng-model="character.pathName">
 				<option ng-repeat="path in character.class.paths" key="{{path.name}}">{{path.name}}</option>
 			</select>
 		</span>
@@ -49,6 +49,25 @@
 				<td><input type="checkbox" ng-model="character[skill + 'Trained']" ng-disabled="character[skill + 'Disabled']" /></td>
 				<td>{{toModString(character[skill + 'Mod'])}}</td>
 				<td>{{::title[skill]}}</td>
+			</tr>
+		</table>
+
+		<label>Racial features :</label>
+		<ul>
+			<li ng-repeat="feature in character.race.features">{{feature}}</li>
+		</ul>
+
+		<label>Background feature : </label><span>{{character.bg.feature}}</span><br/>
+
+		<label>Classe features :</label>
+		<table>
+			<tr>
+				<td>Level</td>
+				<td>Name</td>
+			</tr>
+			<tr ng-repeat="feature in character.features | orderBy:'level'">
+				<td>{{feature.level}}</td>
+				<td>{{feature.name}}</td>
 			</tr>
 		</table>
 
