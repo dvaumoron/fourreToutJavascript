@@ -13,6 +13,19 @@ angular.module('DD5App',[])
 			modStr += mod.toString();
 			return modStr;
 		};
+		$scope.toOrdinalString = function(value) {
+			var valueStr = '' + value;
+			if (value == 1) {
+				valueStr += 'st';
+			} else if (value == 2) {
+				valueStr += 'nd';
+			} else if (value == 3) {
+				valueStr += 'rd';
+			} else {
+				valueStr += 'th';
+			}
+			return valueStr;
+		};
 		function spaceCamel(string) {
 			return string.replace(/([A-Z])/g, ' $1')
 		}
@@ -453,6 +466,7 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['animalHandling', 'athletics', 'intimidation', 'nature', 'perception', 'survival'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: '',
 				features: [
 					{
 						level: 1,
@@ -590,6 +604,7 @@ angular.module('DD5App',[])
 				skillNumber: 3,
 				skills: $scope.skillList,
 				featProgression: standardFeatProgression,
+				spellcastingAbility: 'cha',
 				features: [
 					{
 						level: 1,
@@ -718,6 +733,7 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['history', 'insight', 'medecine', 'persuasion', 'religion'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: 'wis',
 				features: [
 					{
 						level: 1,
@@ -996,6 +1012,7 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['arcana', 'animalHandling', 'insight', 'medecine', 'nature', 'perception', 'religion', 'survival'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: 'wis',
 				features: [
 					{
 						level: 1,
@@ -1096,6 +1113,7 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['acrobatics', 'animalHandling', 'athletics', 'history', 'insight', 'intimidation', 'perception', 'survival'],
 				featProgression: [4, 6, 8, 12, 14, 16, 19],
+				spellcastingAbility: 'int',
 				features: [
 					{
 						level: 1,
@@ -1250,6 +1268,7 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['acrobatics', 'athletics', 'history', 'insight', 'religion', 'stealth'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: '',
 				features: [
 					{
 						level: 1,
@@ -1429,6 +1448,7 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['athletics', 'insight', 'intimidation', 'medecine', 'persuasion', 'religion'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: 'cha',
 				features: [
 					{
 						level: 1,
@@ -1591,6 +1611,7 @@ angular.module('DD5App',[])
 				skillNumber: 3,
 				skills: ['animalHandling', 'athletics', 'insight', 'investigation', 'nature', 'perception', 'stealth', 'survival'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: 'wis',
 				features: [
 					{
 						level: 1,
@@ -1703,6 +1724,7 @@ angular.module('DD5App',[])
 				skillNumber: 4,
 				skills: ['acrobatics', 'athletics', 'deception', 'insight', 'intimidation', 'investigation', 'perception', 'performance', 'persuasion', 'sleightOfHand', 'stealth'],
 				featProgression: [4, 8, 10, 12, 16, 19],
+				spellcastingAbility: 'int',
 				features: [
 					{
 						level: 1,
@@ -1890,6 +1912,7 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['arcana', 'deception', 'insight', 'intimidation', 'persuasion', 'religion'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: 'cha',
 				features: [
 					{
 						level: 1,
@@ -2007,6 +2030,8 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['arcana', 'deception', 'history', 'intimidation', 'investigation', 'nature', 'religion'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: 'cha',
+				spellSlot: [1, 2, 11, 17],
 				features: [
 					{
 						level: 1,
@@ -2153,6 +2178,7 @@ angular.module('DD5App',[])
 				skillNumber: 2,
 				skills: ['arcana', 'history', 'insight', 'investigation', 'medecine', 'religion'],
 				featProgression: standardFeatProgression,
+				spellcastingAbility: 'int',
 				features: [
 					{
 						level: 1,
@@ -2638,6 +2664,26 @@ angular.module('DD5App',[])
 			character.spellSlots = spellSlots;
 		};
 
+		character.updateWarlockSpellSlots = function() {
+			if (character.class.name == 'Warlock') {
+				var slotNumber = 0;
+				angular.forEach(character.class.spellSlot, function(slot) {
+					if (character.level >= slot) {
+						slotNumber += 1;
+					}
+				});
+				character.spellSlotNumber = slotNumber;
+				var slotLevel = Math.ceil(character.level / 2);
+				if (slotLevel > 5) {
+					slotLevel = 5;
+				}
+				character.spellSlotLevel = slotLevel;
+			} else {
+				character.spellSlotNumber = 0;
+				character.spellSlotLevel = 0;
+			}
+		};
+
 		$scope.$watch('character.conMod', function(newValue, oldValue) {
 			character.updateHPMax();
 		});
@@ -2650,6 +2696,7 @@ angular.module('DD5App',[])
 			character.updateFeatNumber();
 			character.updateFeatures();
 			character.updateSpellSlots();
+			character.updateWarlockSpellSlots();
 		});
 
 		$scope.$watch('character.class', function(newValue, oldValue) {
@@ -2661,6 +2708,7 @@ angular.module('DD5App',[])
 			character.updateFeatNumber();
 			character.updateFeatures();
 			character.updateSpellSlots();
+			character.updateWarlockSpellSlots();
 		});
 
 		$scope.$watch('character.pathName', function(newValue, oldValue) {

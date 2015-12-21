@@ -71,24 +71,24 @@
 			</tr>
 		</table>
 
-		<div ng-show="character.spellSlots.length != 0">
+		<div ng-show="character.spellSlots.length != 0 || character.class.name == 'Warlock'">
+			<label>Spellcasting ability : </label><span>{{capitalizeFirstLetter(character.class.spellcastingAbility)}}</span>
+			<label>Spell save DC : </label><span>{{8 + character[character.class.spellcastingAbility + 'Mod'] + character.profMod}}</span>
+			<label>Spell attack modifier : </label><span>{{toModString(character[character.class.spellcastingAbility + 'Mod'] + character.profMod)}}</span><br/>
 			<label>Spell Slots :</label>
+		</div>
+		<div ng-show="character.spellSlots.length != 0">
 			<table>
 				<tr>
-					<td>1st</td>
-					<td>2nd</td>
-					<td>3rd</td>
-					<td>4th</td>
-					<td>5th</td>
-					<td>6th</td>
-					<td>7th</td>
-					<td>8th</td>
-					<td>9th</td>
+					<td ng-repeat="n in [1,2,3,4,5,6,7,8,9]">{{toOrdinalString(n)}}</td>
 				</tr>
 				<tr>
 					<td ng-repeat="slotNumber in character.spellSlots track by $index">{{slotNumber}}</td>
 				</tr>
 			</table>
+		</div>
+		<div ng-show="character.class.name == 'Warlock'">
+			<span>{{character.spellSlotNumber}} of {{toOrdinalString(character.spellSlotLevel)}} Level</span>
 		</div>
 
 		<input type="button" value="Save" ng-click="character.save()" />
