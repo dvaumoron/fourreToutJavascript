@@ -744,6 +744,10 @@ angular.module('DD5App',[])
 						name: 'Channel Divinity (1/Rest)'
 					},
 					{
+						level: 2,
+						name: 'Channel Divinity: Turn Undead'
+					},
+					{
 						level: 5,
 						name: 'Destroy Undead (CR 1/2)'
 					},
@@ -2031,7 +2035,7 @@ angular.module('DD5App',[])
 				skills: ['arcana', 'deception', 'history', 'intimidation', 'investigation', 'nature', 'religion'],
 				featProgression: standardFeatProgression,
 				spellcastingAbility: 'cha',
-				spellSlot: [1, 2, 11, 17],
+				spellSlotLevel: [1, 2, 11, 17],
 				features: [
 					{
 						level: 1,
@@ -2667,8 +2671,8 @@ angular.module('DD5App',[])
 		character.updateWarlockSpellSlots = function() {
 			if (character.class.name == 'Warlock') {
 				var slotNumber = 0;
-				angular.forEach(character.class.spellSlot, function(slot) {
-					if (character.level >= slot) {
+				angular.forEach(character.class.spellSlotLevel, function(slotLevel) {
+					if (character.level >= slotLevel) {
 						slotNumber += 1;
 					}
 				});
