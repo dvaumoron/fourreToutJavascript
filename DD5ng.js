@@ -2334,7 +2334,9 @@ angular.module('DD5App',[])
 				]
 			}
 		];
-		character.class = $scope.classes[0]; 
+		character.class = $scope.classes[0];
+		character.path = character.class.paths[0];
+		character.pathName = character.path.name;
 
 		$scope.pathByName = {};
 		angular.forEach($scope.classes, function(classe) {
