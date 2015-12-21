@@ -73,6 +73,25 @@ angular.module('DD5App',[])
 				]
 			},
 			{
+				name: 'Duergar',
+				ability: [1, 0, 2, 0, 0, 0],
+				speed: 25,
+				hitPoint: 0,
+				skillNumber: 0,
+				skills: [],
+				features: [
+					'Superior Darkvision',
+					'Dwarven Resilisence',
+					'Dwarven Combat Training',
+					'Tool Proficiency',
+					'Stone Cunning',
+					'Extra Language',
+					'Duergar Resilience',
+					'Duergar Magic',
+					'Sunlight Sensitivity'
+				]
+			},
+			{
 				name: 'High Elf',
 				ability: [0, 2, 0, 1, 0, 0],
 				speed: 30,
@@ -86,6 +105,21 @@ angular.module('DD5App',[])
 					'Elf Weapon Training',
 					'Cantrip',
 					'Extra Language'
+				]
+			},
+			{
+				name: 'Eladrin',
+				ability: [0, 2, 0, 1, 0, 0],
+				speed: 30,
+				hitPoint: 0,
+				skillNumber: 1,
+				skills: ['perception'],
+				features: [
+					'Darkvision',
+					'Fey Ancestry',
+					'Trance',
+					'Elf Weapon Training',
+					'Fey Step',
 				]
 			},
 			{
@@ -198,6 +232,20 @@ angular.module('DD5App',[])
 				]
 			},
 			{
+				name: 'Deep Gnome',
+				ability: [0, 1, 0, 2, 0, 0],
+				speed: 25,
+				hitPoint: 0,
+				skillNumber: 0,
+				skills: [],
+				features: [
+					'Superior Darkvision',
+					'Gnome Cunning',
+					'Stone Camouflage',
+					'Extra Language'
+				]
+			},
+			{
 				name: 'Half-Elf',
 				ability: [0, 0, 0, 0, 0, 2],
 				speed: 30,
@@ -233,6 +281,95 @@ angular.module('DD5App',[])
 					'Darkvision',
 					'Hellish Resistance',
 					'Infernal Legacy'
+				]
+			},
+			{
+				name: 'Aasimar',
+				ability: [0, 0, 0, 0, 1, 2],
+				speed: 30,
+				hitPoint: 0,
+				skillNumber: 0,
+				skills: [],
+				features: [
+					'Darkvision',
+					'Celestial Resistance',
+					'Celestial Legacy'
+				]
+			},
+			{
+				name: 'Aarakocra',
+				ability: [0, 2, 0, 0, 1, 0],
+				speed: 25,
+				hitPoint: 0,
+				skillNumber: 0,
+				skills: [],
+				features: [
+					'Flight',
+					'Talons'
+				]
+			},
+			{
+				name: 'Air Genasi',
+				ability: [0, 1, 2, 0, 0, 0],
+				speed: 30,
+				hitPoint: 0,
+				skillNumber: 0,
+				skills: [],
+				features: [
+					'Unending Breath',
+					'Mingle with the Wind'
+				]
+			},
+			{
+				name: 'Earth Genasi',
+				ability: [1, 0, 2, 0, 0, 0],
+				speed: 30,
+				hitPoint: 0,
+				skillNumber: 0,
+				skills: [],
+				features: [
+					'Earth Walk',
+					'Merg with Stone'
+				]
+			},
+			{
+				name: 'Fire Genasi',
+				ability: [0, 0, 2, 1, 0, 0],
+				speed: 30,
+				hitPoint: 0,
+				skillNumber: 0,
+				skills: [],
+				features: [
+					'Darkvision',
+					'Fire Resistance',
+					'Reach to the Blaze'
+				]
+			},
+			{
+				name: 'Water Genasi',
+				ability: [0, 0, 2, 0, 1, 0],
+				speed: 30,
+				hitPoint: 0,
+				skillNumber: 0,
+				skills: [],
+				features: [
+					'Acid Resistance',
+					'Amphibious',
+					'Swim',
+					'Call to the Wave'
+				]
+			},
+			{
+				name: 'Goliath',
+				ability: [2, 0, 1, 0, 0, 0],
+				speed: 30,
+				hitPoint: 0,
+				skillNumber: 1,
+				skills: ['athletics'],
+				features: [
+					'Stone\'s Endurance',
+					'Powerfull Build',
+					'Mountain Born'
 				]
 			}
 		];
@@ -352,6 +489,27 @@ angular.module('DD5App',[])
 							{
 								level: 14,
 								name: 'Totemic Attunement'
+							}
+						]
+					},
+					{
+						name: 'Path of the Battlerager',
+						features: [
+							{
+								level: 3,
+								name: 'Battlerager Armor'
+							},
+							{
+								level: 6,
+								name: 'Reckless Abandon'
+							},
+							{
+								level: 10,
+								name: 'Battlerager Charge'
+							},
+							{
+								level: 14,
+								name: 'Spiked Retribution'
 							}
 						]
 					}
@@ -735,6 +893,31 @@ angular.module('DD5App',[])
 								name: 'Avatar of Battle'
 							}
 						]
+					},
+					{
+						name: 'Arcana Domain',
+						features: [
+							{
+								level: 1,
+								name: 'Arcana Initiate'
+							},
+							{
+								level: 2,
+								name: 'Channel Divinity: Arcane Abjuration'
+							},
+							{
+								level: 6,
+								name: 'Spell Breaker'
+							},
+							{
+								level: 8,
+								name: 'Potent Spellcasting'
+							},
+							{
+								level: 17,
+								name: 'Arcane Mastery'
+							}
+						]
 					}
 				]
 			},
@@ -968,6 +1151,27 @@ angular.module('DD5App',[])
 								name: 'Improved War Magic'
 							}
 						]
+					},
+					{
+						name: 'Purple Dragon Knight',
+						features: [
+							{
+								level: 3,
+								name: 'Rallying Cry'
+							},
+							{
+								level: 7,
+								name: 'Royal Enjoy'
+							},
+							{
+								level: 10,
+								name: 'Inspiring Surge'
+							},
+							{
+								level: 15,
+								name: 'Bulwark'
+							}
+						]
 					}
 				]
 			},
@@ -1103,6 +1307,48 @@ angular.module('DD5App',[])
 							{
 								level: 3,
 								name: 'Disciple of the Elements'
+							}
+						]
+					},
+					{
+						name: 'Way of the Long Death',
+						features: [
+							{
+								level: 3,
+								name: 'Touch of Death'
+							},
+							{
+								level: 6,
+								name: 'Hour of Reaping'
+							},
+							{
+								level: 11,
+								name: 'Mastery of Death'
+							},
+							{
+								level: 17,
+								name: 'Touch of the Long Death'
+							}
+						]
+					},
+					{
+						name: 'Way of the Sun Soul',
+						features: [
+							{
+								level: 3,
+								name: 'Radiant Sun Bolt'
+							},
+							{
+								level: 6,
+								name: 'Searing Arc Strike'
+							},
+							{
+								level: 11,
+								name: 'Searing Sunburst'
+							},
+							{
+								level: 17,
+								name: 'Sun Shield'
 							}
 						]
 					}
@@ -1242,6 +1488,31 @@ angular.module('DD5App',[])
 								name: 'Avenging Angel'
 							}
 						]
+					},
+					{
+						name: 'Oath of the Crown',
+						features: [
+							{
+								level: 3,
+								name: 'Channel Divinity: Champion Challenge'
+							},
+							{
+								level: 3,
+								name: 'Channel Divinity: Turn the Tide'
+							},
+							{
+								level: 7,
+								name: 'Divine Allegiance'
+							},
+							{
+								level: 15,
+								name: 'Unyielding Spirit'
+							},
+							{
+								level: 20,
+								name: 'Exalted Champion'
+							}
+						]
 					}
 				]
 			},
@@ -1286,12 +1557,12 @@ angular.module('DD5App',[])
 						name: 'Land\'s Stride'
 					},
 					{
-						level: 3,
-						name: 'Primal Awareness'
+						level: 10,
+						name: 'Natural Explorer improvement'
 					},
 					{
 						level: 10,
-						name: 'Natural Explorer improvement'
+						name: 'Hide in Plain Sight'
 					},
 					{
 						level: 14,
@@ -1491,6 +1762,56 @@ angular.module('DD5App',[])
 								name: 'Spell Thief'
 							}
 						]
+					},
+					{
+						name: 'Mastermind',
+						features: [
+							{
+								level: 3,
+								name: 'Master of Intrigue'
+							},
+							{
+								level: 3,
+								name: 'Maste of Tactics'
+							},
+							{
+								level: 9,
+								name: 'Insightful Manipulator'
+							},
+							{
+								level: 13,
+								name: 'Misdirection'
+							},
+							{
+								level: 17,
+								name: 'Soul of Deceit'
+							}
+						]
+					},
+					{
+						name: 'Swashbuckler',
+						features: [
+							{
+								level: 3,
+								name: 'Fancy Footwork'
+							},
+							{
+								level: 3,
+								name: 'Rakish Audacity'
+							},
+							{
+								level: 9,
+								name: 'Panache'
+							},
+							{
+								level: 13,
+								name: 'Elegant Maneuver'
+							},
+							{
+								level: 17,
+								name: 'Master Duelist'
+							}
+						]
 					}
 				]
 			},
@@ -1577,6 +1898,35 @@ angular.module('DD5App',[])
 							{
 								level: 18,
 								name: 'Spell Bombardment'
+							}
+						]
+					},
+					{
+						name: 'Storm Sorcery',
+						features: [
+							{
+								level: 1,
+								name: 'Wind Speaker'
+							},
+							{
+								level: 1,
+								name: 'Tempestuaus Magic'
+							},
+							{
+								level: 6,
+								name: 'Heart of the Storm'
+							},
+							{
+								level: 6,
+								name: 'Storm Guide'
+							},
+							{
+								level: 14,
+								name: 'Storm\'s Fury'
+							},
+							{
+								level: 18,
+								name: 'Wind Soul'
 							}
 						]
 					}
@@ -1698,6 +2048,31 @@ angular.module('DD5App',[])
 							{
 								level: 14,
 								name: 'Create Thrall'
+							}
+						]
+					},
+					{
+						name: 'The Undying',
+						features: [
+							{
+								level: 1,
+								name: 'Expanded Spell List'
+							},
+							{
+								level: 1,
+								name: 'Among the Dead'
+							},
+							{
+								level: 6,
+								name: 'Defy Death'
+							},
+							{
+								level: 10,
+								name: 'Undying Nature'
+							},
+							{
+								level: 14,
+								name: 'Indestructible Life'
 							}
 						]
 					}
@@ -1930,6 +2305,31 @@ angular.module('DD5App',[])
 								name: 'Master Transmuter'
 							}
 						]
+					},
+					{
+						name: 'Bladesinging',
+						features: [
+							{
+								level: 2,
+								name: 'Training in War and Song'
+							},
+							{
+								level: 2,
+								name: 'Bladesong'
+							},
+							{
+								level: 6,
+								name: 'Extra Attack'
+							},
+							{
+								level: 10,
+								name: 'Song of Defense'
+							},
+							{
+								level: 14,
+								name: 'Song of Victory'
+							}
+						]
 					}
 				]
 			}
@@ -2008,6 +2408,66 @@ angular.module('DD5App',[])
 				name: 'Urchin',
 				skills: ['sleightOfHand', 'stealth'],
 				feature: 'City Secrets'
+			},
+			{
+				name: 'City Watch',
+				skills: ['athletics', 'insight'],
+				feature: 'Watcher\'s Eye'
+			},
+			{
+				name: 'Clan Crafter',
+				skills: ['history', 'insight'],
+				feature: 'Respect of the Stout Folk'
+			},
+			{
+				name: 'Cloistered Scholar',
+				skills: ['history'],
+				feature: 'Library Access'
+			},
+			{
+				name: 'Courtier',
+				skills: ['insight', 'persuasion'],
+				feature: 'Court Functionary'
+			},
+			{
+				name: 'Faction Agent',
+				skills: ['insight'],
+				feature: 'Safe Haven'
+			},
+			{
+				name: 'Far Traveler',
+				skills: ['insight', 'perception'],
+				feature: 'All Eye on You'
+			},
+			{
+				name: 'Inheritor',
+				skills: ['survival'],
+				feature: 'Inheritance'
+			},
+			{
+				name: 'Knight of the Order',
+				skills: ['persuasion'],
+				feature: 'Knightly Regard'
+			},
+			{
+				name: 'Mercenary Veteran',
+				skills: ['athletics', 'persuasion'],
+				feature: 'Mercenary Life'
+			},
+			{
+				name: 'Urban Bounty Hunter',
+				skills: [],
+				feature: 'Ear to the Ground'
+			},
+			{
+				name: 'Uthgardt Tribe Member',
+				skills: ['athletics', 'survival'],
+				feature: 'Uthgardt Heritage'
+			},
+			{
+				name: 'Waterdhavian Noble',
+				skills: ['history', 'persuasion'],
+				feature: 'Kept in Style'
 			}
 		];
 		character.bg = $scope.bgs[0];
