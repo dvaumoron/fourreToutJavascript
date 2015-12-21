@@ -71,6 +71,26 @@
 			</tr>
 		</table>
 
+		<div ng-show="character.spellSlots.length != 0">
+			<label>Spell Slots :</label>
+			<table>
+				<tr>
+					<td>1st</td>
+					<td>2nd</td>
+					<td>3rd</td>
+					<td>4th</td>
+					<td>5th</td>
+					<td>6th</td>
+					<td>7th</td>
+					<td>8th</td>
+					<td>9th</td>
+				</tr>
+				<tr>
+					<td ng-repeat="slotNumber in character.spellSlots track by $index">{{slotNumber}}</td>
+				</tr>
+			</table>
+		</div>
+
 		<input type="button" value="Save" ng-click="character.save()" />
 		<input type="button" value="Load" ng-click="character.load()" />
 		<input type="button" value="Remove" ng-click="character.remove()" />
