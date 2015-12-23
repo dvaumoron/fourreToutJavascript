@@ -80,7 +80,7 @@
 		<div ng-show="character.spellSlots.length != 0">
 			<table>
 				<tr>
-					<td ng-repeat="n in [1,2,3,4,5,6,7,8,9]">{{toOrdinalString(n)}}</td>
+					<td ng-repeat="n in ::[1,2,3,4,5,6,7,8,9]">{{::toOrdinalString(n)}}</td>
 				</tr>
 				<tr>
 					<td ng-repeat="slotNumber in character.spellSlots track by $index">{{slotNumber}}</td>
