@@ -1866,7 +1866,7 @@ angular.module('DD5App',[])
 							},
 							{
 								level: 3,
-								name: 'Maste of Tactics'
+								name: 'Master of Tactics'
 							},
 							{
 								level: 9,
