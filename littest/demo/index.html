@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+  <div id="demo"></div>
+
+  <script type="module">
+    import { html, render } from 'lit';
+    import '../hello-world.js';
+
+    const title = 'Hello Denis!';
+    render(
+      html`
+        <hello-world .title=${title}>
+          some light-dom
+        </hello-world>
+      `,
+      document.querySelector('#demo')
+    );
+  </script>
+</body>
+</html>
